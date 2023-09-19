@@ -15,9 +15,10 @@ def generate_unique_email(name):
     names = cleaned_name.split()
     # Extract the first and last names (or the available names)
     first_name = names[0]
+    first_letter = first_name[0]
     last_name = names[-1] if len(names) > 1 else ""
     # Generate a unique email address
-    email = f"{first_name.lower()}.{last_name.lower()}@gmail.com"
+    email = f"{first_letter.lower()}{last_name.lower()}@gmail.com"
     # Ensure the email is unique
     counter = 1
     while email in unique_emails:
