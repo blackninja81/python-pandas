@@ -1,5 +1,6 @@
+# Extract Data from JSONL to Excel
+
 ## main.py
-## Extract Data from JSONL to Excel
 
 This Python script extracts data from a JSONL file and creates an Excel file with selected attributes. It uses the argparse library for command-line argument handling and the pandas library for working with data in DataFrames.
 ## Script Overview
