@@ -39,9 +39,8 @@ Inside the function:
 - The script parses the command-line arguments using parser.parse_args() and stores them in the args object.
 - Finally, it calls the extract_data function with the provided input and output file paths to perform the data extraction and Excel file creation.
 
-<pre>
-  <code>
-  import argparse
+```python
+import argparse
 import json
 import os
 import pandas as pd
@@ -86,44 +85,7 @@ if __name__ == "__main__":
     # Call the function to extract data and create an Excel file
     extract_data(args.input, args.output)
 
-  </code>
-<pre>
-
-
-
-function CopyToClipboard(params) {
-  const codeContainer = document.getElementsByTagName('pre');
-  // debugger
-  for (const item of codeContainer) {
-    const button = document.createElement('button');
-    button.innerText = 'Copy';
-    button.style.position = 'absolute';
-    button.style.top = "0";
-    button.style.right = "0";
-    button.style.fontSize = "10px";
-    button.style.border = "none";
-    button.style.background = "gainsboro";
-    button.style.borderRadius = "0px 3px 0px 3px";
-    button.className = 'copy-btn';
-    button.onclick = function () {
-      let x = item.firstChild.textContent
-      console.log('iiner', x)
-      const el = document.createElement('textarea');
-      el.value = x;
-      document.body.appendChild(el);
-      el.select();
-      document.execCommand('copy');
-      document.body.removeChild(el);
-      button.innerText = 'Copied';
-      setTimeout(() => {
-        button.innerText = 'Copy';
-      }, 1000);
-    };
-    item.append(button);
-  }
-}
-
-export default CopyToClipboard;
+```
 
 ## generator.sh
 ## Bash Script for Extracting Data from JSONL to Excel
