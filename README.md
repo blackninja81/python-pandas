@@ -171,8 +171,8 @@ echo "Excel files generated for each JSONL file and stored in the 'outputs'"
 
 ```
 
-```python
 ## sperate.py
+```python
 import json
 import os
 import pandas as pd
@@ -211,8 +211,8 @@ for language in languages:
 print("JSONL files generated and stored in the 'outputs' folder.")
 
 ```
+## translate.py
 ```python
-#translate.py
 import pandas as pd
 import json
 import os
