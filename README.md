@@ -39,6 +39,92 @@ Inside the function:
 - The script parses the command-line arguments using parser.parse_args() and stores them in the args object.
 - Finally, it calls the extract_data function with the provided input and output file paths to perform the data extraction and Excel file creation.
 
+<pre>
+  <code>
+  import argparse
+import json
+import os
+import pandas as pd
+
+def extract_data(input_file, output_file):
+    # Create a list to store DataFrames for concatenation
+    selected_data_list = []
+
+    # Read the JSONL file and extract relevant attributes
+    with open(input_file, 'r') as json_file:
+        data = [json.loads(line) for line in json_file]
+        for record in data:
+            # Extract the attributes
+            id_value = record.get('id', '')
+            utt_value = record.get('utt', '')
+            annot_utt_value = record.get('annot_utt', '')
+
+            # Create a DataFrame for the current record
+            selected_data_list.append(pd.DataFrame({
+                'id': [id_value],
+                'utt': [utt_value],
+                'annot_utt': [annot_utt_value]
+            }))
+
+    # Concatenate the DataFrames
+    selected_data = pd.concat(selected_data_list, ignore_index=True)
+
+    # Write the selected data to an Excel file
+    selected_data.to_excel(output_file, index=False)
+
+if __name__ == "__main__":
+    # Create an ArgumentParser object
+    parser = argparse.ArgumentParser(description='Extract data from a JSONL file and create an Excel file.')
+
+    # Add command-line arguments (flags)
+    parser.add_argument('--input', type=str, required=True, help='Path to the input JSONL file')
+    parser.add_argument('--output', type=str, required=True, help='Path to the output Excel file')
+
+    # Parse command-line arguments
+    args = parser.parse_args()
+
+    # Call the function to extract data and create an Excel file
+    extract_data(args.input, args.output)
+
+  </code>
+<pre>
+
+
+
+function CopyToClipboard(params) {
+  const codeContainer = document.getElementsByTagName('pre');
+  // debugger
+  for (const item of codeContainer) {
+    const button = document.createElement('button');
+    button.innerText = 'Copy';
+    button.style.position = 'absolute';
+    button.style.top = "0";
+    button.style.right = "0";
+    button.style.fontSize = "10px";
+    button.style.border = "none";
+    button.style.background = "gainsboro";
+    button.style.borderRadius = "0px 3px 0px 3px";
+    button.className = 'copy-btn';
+    button.onclick = function () {
+      let x = item.firstChild.textContent
+      console.log('iiner', x)
+      const el = document.createElement('textarea');
+      el.value = x;
+      document.body.appendChild(el);
+      el.select();
+      document.execCommand('copy');
+      document.body.removeChild(el);
+      button.innerText = 'Copied';
+      setTimeout(() => {
+        button.innerText = 'Copy';
+      }, 1000);
+    };
+    item.append(button);
+  }
+}
+
+export default CopyToClipboard;
+
 ## generator.sh
 ## Bash Script for Extracting Data from JSONL to Excel
 - This Bash script is designed to automate the process of extracting data from JSONL (JSON Lines) files and creating corresponding Excel files. It utilizes command-line arguments (flags) to specify input and output directories. The script loops through all JSONL files in the input directory, processes each file, and generates Excel files in the specified output directory.
@@ -86,4 +172,4 @@ The script performs the following tasks:
 3. Navigate to the directory containing the script.
 4. Run the script with the following command:
 ![imports](images/usage.png)
-        ./generator.sh
+   
