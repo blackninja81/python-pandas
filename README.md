@@ -86,5 +86,4 @@ The script performs the following tasks:
 3. Navigate to the directory containing the script.
 4. Run the script with the following command:
 ![imports](images/usage.png)
-   
-   [Copy Script](./generator.sh)
+        ./generator.sh
