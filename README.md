@@ -170,4 +170,75 @@ done
 echo "Excel files generated for each JSONL file and stored in the 'outputs'"
 
 ```
-   
+
+```python
+## sperate.py
+import json
+import os
+import pandas as pd
+
+# Define the directory containing JSONL files
+jsonl_dir = 'dataset/data_files/data/1/data'
+
+# Create the "outputs" folder if it doesn't exist
+output_folder = 'outputs'
+os.makedirs(output_folder, exist_ok=True)
+
+# Load data from multiple JSONL files into a single DataFrame
+all_data = pd.DataFrame()
+for filename in os.listdir(jsonl_dir):
+    if filename.endswith('.jsonl'):
+        file_path = os.path.join(jsonl_dir, filename)
+        data = pd.read_json(file_path, lines=True)
+        all_data = pd.concat([all_data, data], ignore_index=True)
+
+# Define the languages of interest (English, Swahili, German)
+languages = ['en', 'sw', 'de']
+
+# Create separate JSONL files for each language and set (test, train, dev)
+for language in languages:
+    for set_name in ['test', 'train', 'dev']:
+        # Filter data for the current language and set
+        filtered_data = all_data[(all_data['locale'].str.split('-').str[0] == language) & (all_data['partition'] == set_name)]
+        
+        # Determine the output filename
+        output_filename = f'{language}_{set_name}.jsonl'
+        output_file = os.path.join(output_folder, output_filename)
+
+        # Save the filtered data to a JSONL file
+        filtered_data.to_json(output_file, orient='records', lines=True)
+
+print("JSONL files generated and stored in the 'outputs' folder.")
+
+```
+```python
+#translate.py
+import pandas as pd
+import json
+import os
+
+# Define the paths to the JSONL files
+en_train_file = 'outputs2/en_train.jsonl'
+sw_train_file = 'outputs2/sw_train.jsonl'
+de_train_file = 'outputs2/de_train.jsonl'
+
+# Read the JSONL files into DataFrames, selecting only 'id' and 'utt' columns
+en_train_df = pd.read_json(en_train_file, lines=True)[['id', 'utt']]
+sw_train_df = pd.read_json(sw_train_file, lines=True)[['id', 'utt']]
+de_train_df = pd.read_json(de_train_file, lines=True)[['id', 'utt']]
+
+# Merge DataFrames based on 'id'
+merged_df = en_train_df.merge(sw_train_df, on='id', suffixes=('_en', '_sw'))
+merged_df = merged_df.merge(de_train_df, on='id', suffixes=('_en', '_de'))
+
+# Rename columns to match the desired format
+merged_df = merged_df.rename(columns={'utt_en': 'en', 'utt_sw': 'sw', 'utt': 'de'})
+
+# Save the merged DataFrame to a JSONL file with pretty printing
+output_file = 'merged_data.jsonl'
+with open(output_file, 'w', encoding='utf-8') as jsonl_output_file:
+    jsonl_output_file.write(merged_df.to_json(orient='records', lines=True, indent=2))
+
+print("Data merged and saved to 'merged_data.jsonl' with pretty printing")
+
+```
