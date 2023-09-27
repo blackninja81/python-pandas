@@ -134,10 +134,10 @@ The script performs the following tasks:
 2. Open a terminal/command prompt.
 3. Navigate to the directory containing the script.
 4. Run the script with the following command:
-```
+```bash
 ./generator.sh
 ```
-```
+```bash
 #!/bin/bash
 
 # Default values for flags
