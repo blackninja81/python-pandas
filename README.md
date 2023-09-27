@@ -1,4 +1,4 @@
-# main.py
+## main.py
 ## Extract Data from JSONL to Excel
 
 This Python script extracts data from a JSONL file and creates an Excel file with selected attributes. It uses the argparse library for command-line argument handling and the pandas library for working with data in DataFrames.
@@ -39,7 +39,7 @@ Inside the function:
 - The script parses the command-line arguments using parser.parse_args() and stores them in the args object.
 - Finally, it calls the extract_data function with the provided input and output file paths to perform the data extraction and Excel file creation.
 
-# generator.sh
+## generator.sh
 ## Bash Script for Extracting Data from JSONL to Excel
 - This Bash script is designed to automate the process of extracting data from JSONL (JSON Lines) files and creating corresponding Excel files. It utilizes command-line arguments (flags) to specify input and output directories. The script loops through all JSONL files in the input directory, processes each file, and generates Excel files in the specified output directory.
 ## Script Overview
@@ -61,19 +61,19 @@ The script performs the following tasks:
 ![imports](images/flags.png)
 - This section defines the command-line flags and their default values using the getopts construct. The flags include:
 
--     -i: Specifies the input directory (default is 'dataset/data_files/data/1/data').
--     -o: Specifies the output directory (default is '../outputs').
+- -i: Specifies the input directory (default is 'dataset/data_files/data/1/data').
+- -o: Specifies the output directory (default is '../outputs').
 
 - Users can provide these flags when running the script to specify custom input and output directories.
 ### Loop Through JSONL Files
 ![imports](images/loop.png)
 - This section of the script performs the core processing:
 
--     It uses a for loop to iterate through each JSONL file in the input directory.
--     The if condition checks if the file exists (-f) before proceeding.
--     It determines the output filename for the corresponding Excel file based on the input JSONL filename.
--     It calls a Python script (main.py) and provides the input and output file paths as flags.
--     After processing each file, it displays a message indicating the processing status.
+- It uses a for loop to iterate through each JSONL file in the input directory.
+- The if condition checks if the file exists (-f) before proceeding.
+- It determines the output filename for the corresponding Excel file based on the input JSONL filename.
+- It calls a Python script (main.py) and provides the input and output file paths as flags.
+- After processing each file, it displays a message indicating the processing status.
 ### Final Message
 ![imports](images/message.png)
 - At the end of the script, it prints a message indicating that Excel files have been generated for each JSONL file and stored in the 'outputs' directory.
@@ -86,3 +86,4 @@ The script performs the following tasks:
 3. Navigate to the directory containing the script.
 4. Run the script with the following command:
 ![imports](images/usage.png)
+     ./generator.sh
